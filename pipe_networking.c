@@ -24,12 +24,12 @@ int server_handshake(int *to_client) {
     printf("Said by client: %s", msg);
 
     close(fd);
-    
+
     fd = open("waluigi", O_WRONLY);
     char send_client[BUFFER_SIZE];
     fgets(send_client, BUFFER_SIZE, stdin);
     write(fd, send_client, BUFFER_SIZE);
-    
+
     close(fd);
   }
   return 0;
@@ -47,6 +47,7 @@ int server_handshake(int *to_client) {
   =========================*/
 int client_handshake(int *to_server) {
   int pipe_file;
+  int private_pipe;
   if ((pipe_file = mkfifo("waluigi", 0644)) == -1) {
     //printf("Error %d: %s\n", errno, strerror(errno));    //not error
   }
@@ -57,7 +58,7 @@ int client_handshake(int *to_server) {
     char send_msg[BUFFER_SIZE];
     fgets(send_msg, BUFFER_SIZE, stdin);
     write(fd, send_msg, BUFFER_SIZE);
-    
+
     close(fd);
 
     fd = open("waluigi", O_RDONLY);
